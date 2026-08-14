@@ -5,12 +5,6 @@ Lisakhanya Gumengi
 Mataye Whitelhane
 Yoland Magxagxa
 
-**JavaScript Johann Sebastian Joust** is a very raw, dependency-slim, open-source implementation of the funny multiplayer not-video-game Johann Sebastian Joust.
-
-It's meant to be for illustrative purposes only: you'll find a slim server implementation, an HTML5 accelerometer monitor and audio player with variable pitch support, vibration, and a simple technique to obtain synced audio and gameplay across multiple devices.
-
-Obviously you can also have fun playing it — but I suggest you [buy and play the full game](http://www.jsjoust.com/), which is way better! ;)
-
 ## Setup
 
 Make sure you have `openssl` installed. Clone this repository and run:
