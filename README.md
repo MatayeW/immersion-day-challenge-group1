@@ -1,17 +1,14 @@
-<<<<<<< HEAD
-# immersion-day-challenge-group1
-=======
-# jsjsj
+# jsjsj — Immersion Day Challenge (Group 1)
 
-**JavaScript Johann Sebastian Joust** is a very raw, dependency slim, opensource implementation of the funny multiplayer not-video game Johann Sebastian Joust.
+**JavaScript Johann Sebastian Joust** is a very raw, dependency-slim, open-source implementation of the funny multiplayer not-video-game Johann Sebastian Joust.
 
-It's meant to be for illustrative purposes only: you'll find a slim server implementation, an HTML5 accelerometer monitor and audio player with variable pitch support, vibration and a simple technique to obtain synced audio and gameplay on multiple devices.
+It's meant to be for illustrative purposes only: you'll find a slim server implementation, an HTML5 accelerometer monitor and audio player with variable pitch support, vibration, and a simple technique to obtain synced audio and gameplay across multiple devices.
 
-Obviously you can also have fun playing it - but I suggest you to [buy and play the full game](http://www.jsjoust.com/), which is way better! ;)
+Obviously you can also have fun playing it — but I suggest you [buy and play the full game](http://www.jsjoust.com/), which is way better! ;)
 
 ## Setup
 
-Make sure you've `openssl` installed. Clone this repository and run:
+Make sure you have `openssl` installed. Clone this repository and run:
 
 ```
 # npm install
@@ -26,20 +23,25 @@ Make sure you've `openssl` installed. Clone this repository and run:
 Starting server on port 5001
 ```
 
-Find some friends connected to the same server network, point your modern browser&copy; to `https://<server address>:5001`, accept the security warning, and you're ready.
+Find some friends connected to the same network, point your modern browser&copy; to `https://<server address>:5001`, accept the security warning, and you're ready.
 
 ## How to play
 
 - After loading the game, join a game room.
-- Wait for your friends. In the meanwhile you can fiddle with options:
+- Wait for your friends. In the meantime, you can fiddle with options:
   - **Always play audio**: always plays music on your device.
-  - **Disable blink**: disable screen blinking when you're moving too much
-  - **Disable vibrate**: disable vibration when you're moving too much
-- When you're ready, press the OK button. The clients will sync - once they're ready, hit the OK button once again to start.
-- Try to shake your opponent device but don't move your one too fast! You've to move accordingly to the music: when it's slow, you've to move slowly but when it's played fast, you can move faster!
-- The last man standing wins!
+  - **Disable blink**: disables screen blinking when you're moving too much.
+  - **Disable vibrate**: disables vibration when you're moving too much.
+- When you're ready, press the OK button. The clients will sync — once they're ready, hit the OK button once again to start.
+- Try to shake your opponent's device, but don't move your own too fast! You have to move in step with the music: when it's slow, move slowly; when it plays fast, you can move faster!
+- The last person standing wins!
 
-## Thanks
+## Deploying so others can test on their phones
 
-Thanks to [pascalbros](https://github.com/pascalbros/) for suggesting the game in first place!
->>>>>>> origin/master
+The steps above are for running the server on your own machine/local network with a self-signed cert. To share a public link instead:
+
+1. Push this repo to GitHub (plain `git push`).
+2. Deploy it on a host that runs persistent Node processes — e.g. [Render](https://render.com) or [Railway](https://railway.app) — connected to your GitHub repo, with `node server.js` as the start command.
+3. These hosts provide HTTPS automatically, so you can skip the manual `openssl` cert steps above for the deployed version.
+4. Share the resulting `https://` URL from the host, not the GitHub repo link — iOS in particular requires HTTPS to grant motion-sensor (`devicemotion`) permission, which this game depends on.
+
