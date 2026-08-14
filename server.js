@@ -2,11 +2,14 @@
 const fs = require('fs');
 var express = require('express');
 var https = require('http');
+=======
+var http = require('http');
+>>>>>>> 16c14d3 (updated server,js)
 var path = require('path');
 var socketIO = require('socket.io');
 
 var app = express();
-var server = https.createServer({
+var server = http.createServer({
 	key: fs.readFileSync("certs/key.pem"),
 	cert: fs.readFileSync("certs/cert.pem"),
 },app);
@@ -24,7 +27,11 @@ app.get('/', function(request, response) {
 // Starts the server.
 var port = process.env.PORT || 5001;
 server.listen(port, function() {
+<<<<<<< HEAD
 	console.log('Starting server on port ' + port);
+=======
+	console.log('Starting server on port' + port);
+>>>>>>> 16c14d3 (updated server,js)
 });
 
 // Protocol
