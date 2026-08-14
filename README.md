@@ -1,4 +1,4 @@
-# jsjsj — Immersion Day Challenge (Group 1)
+# Immersion Day Challenge (Group 1)
 
 **JavaScript Johann Sebastian Joust** is a very raw, dependency-slim, open-source implementation of the funny multiplayer not-video-game Johann Sebastian Joust.
 
