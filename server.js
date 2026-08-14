@@ -1,7 +1,7 @@
 // Dependencies
 const fs = require('fs');
 var express = require('express');
-var https = require('https');
+var https = require('http');
 var path = require('path');
 var socketIO = require('socket.io');
 
@@ -22,8 +22,9 @@ app.get('/', function(request, response) {
 });
 
 // Starts the server.
-server.listen(5001, function() {
-	console.log('Starting server on port 5001');
+var port = process.env.PORT || 5001;
+server.listen(port, function() {
+	console.log('Starting server on port ' + port);
 });
 
 // Protocol
