@@ -1,14 +1,10 @@
-<<<<<<< HEAD
 // Dependencies
 const fs = require('fs');
 var express = require('express');
 var https = require('http');
-=======
-var http = require('http');
->>>>>>> 16c14d3 (updated server,js)
 var path = require('path');
 var socketIO = require('socket.io');
-=======
+
 const fs = require("fs");
 const path = require("path");
 const express = require("express");
@@ -16,7 +12,7 @@ const http = require("http");
 const https = require("https");
 const socketIO = require("socket.io");
 const QRCode = require("qrcode");
->>>>>>> ba8c75b (changed some things)
+
 
 const app = express();
 const port = process.env.PORT || 5001;
