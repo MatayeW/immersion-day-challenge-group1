@@ -34,16 +34,12 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-<<<<<<< HEAD
+
 // Starts the server.
 var port = process.env.PORT || 5001;
 server.listen(port, function() {
-<<<<<<< HEAD
 	console.log('Starting server on port ' + port);
-=======
-	console.log('Starting server on port' + port);
->>>>>>> 16c14d3 (updated server,js)
-=======
+
 // Generate QR codes on the server so the app has no external QR-code dependency.
 app.get("/qr", async (req, res) => {
   const text = String(req.query.text || "").slice(0, 2048);
@@ -61,7 +57,7 @@ app.get("/qr", async (req, res) => {
     console.error("QR generation failed:", error);
     res.status(500).send("Could not generate QR code");
   }
->>>>>>> ba8c75b (changed some things)
+
 });
 
 const MAX_PLAYERS = 6;
