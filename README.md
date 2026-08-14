@@ -1,9 +1,11 @@
 # Immersion Day Challenge (Group 1)
-Adamu Abdullahi
-Katlego Maphango
-Lisakhanya Gumengi
-Mataye Whitelhane
-Yoland Magxagxa
+
+- Adamu Abdullahi
+- Katlego Maphango
+- Lisakhanya Gumengi
+- Mataye Whitelhane
+- Yoland Magxagxa
+
 
 ## Setup
 
