@@ -1,4 +1,9 @@
 # Immersion Day Challenge (Group 1)
+Adamu Abdullahi
+Katlego Maphango
+Lisakhanya Gumengi
+Mataye Whitelhane
+Yoland Magxagxa
 
 **JavaScript Johann Sebastian Joust** is a very raw, dependency-slim, open-source implementation of the funny multiplayer not-video-game Johann Sebastian Joust.
 
