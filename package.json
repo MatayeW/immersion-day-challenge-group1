@@ -1,17 +1,14 @@
 {
-  "name": "jsjsj",
-  "version": "0.0.1",
-  "description": "A no-fat JS implementation of the famous Die Gute Fabrik's Johann Sebastian Joust",
+  "name": "joust-immersion-day",
+  "version": "1.0.0",
+  "description": "Polished multiplayer motion game for the Immersion Day Challenge",
   "main": "server.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kesiev/jsjsj.git"
+  "scripts": {
+    "start": "node server.js"
   },
   "dependencies": {
-    "express": ">=5.2.1",
-    "socket.io": ">=4.8.3"
-  },
-  "author": "KesieV",
-  "homepage": "https://github.com/kesiev/jsjsj",
-  "license": "Unlicense"
+    "express": "^5.2.1",
+    "qrcode": "^1.5.4",
+    "socket.io": "^4.8.3"
+  }
 }
