@@ -98,8 +98,7 @@ public/
 
 ## Thanks
 
-Thanks to [pascalbros](https://github.com/pascalbros/) for suggesting the game in
-the first place, and to the original [jsjsj](https://github.com/kesiev/jsjsj) this
+Thanks to the original [jsjsj](https://github.com/kesiev/jsjsj) this
 project builds on.
 
 Obviously you can also have fun playing it — but I suggest you
