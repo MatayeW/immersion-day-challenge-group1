@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
+
+:root {
+  /* ---- palette: tournament banner, not startup-cream ---- */
+  --ink: #12142b;         /* night-sky background */
+  --ink-2: #1c1f42;       /* raised panel */
+  --ink-3: #262a58;       /* raised panel, hover */
+  --gold: #f2b705;        /* tournament gold - primary accent */
+  --gold-dim: #a97f06;
+  --crimson: #e63950;     /* danger / eliminated */
+  --teal: #2bd9c9;        /* victory / success */
+  --parchment: #f5efe1;   /* light text / card fill */
+  --ink-text: #d9dbf5;    /* body text on dark */
+  --ink-text-dim: #9498c4;
+
+  --font-display: 'Bungee', 'Space Grotesk', sans-serif;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: radial-gradient(120% 140% at 50% -10%, #23285e 0%, var(--ink) 55%);
+  color: var(--ink-text);
+  font-family: var(--font-body);
+}
+
+body {
+  min-height: 100vh;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+a { color: var(--teal); }
+
+button {
+  font-family: var(--font-body);
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  border-radius: 14px;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+button:active { transform: translateY(1px) scale(0.99); }
+button:disabled { cursor: not-allowed; opacity: 0.45; transform: none; }
+
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, #ffd23f, var(--gold));
+  color: #241a00;
+  padding: 18px 28px;
+  font-size: 1.15rem;
+  box-shadow: 0 6px 0 var(--gold-dim), 0 10px 24px rgba(242, 183, 5, 0.25);
+}
+.btn-primary:not(:disabled):hover { box-shadow: 0 4px 0 var(--gold-dim), 0 8px 20px rgba(242, 183, 5, 0.3); transform: translateY(2px); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--teal);
+  border: 2px solid rgba(43, 217, 201, 0.5);
+  padding: 14px 22px;
+  font-size: 1rem;
+}
+.btn-ghost:not(:disabled):hover { border-color: var(--teal); background: rgba(43, 217, 201, 0.08); }
+
+input[type="text"] {
+  font-family: var(--font-body);
+  font-weight: 600;
+  background: var(--ink-2);
+  border: 2px solid #363a72;
+  color: var(--parchment);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 1.05rem;
+}
+input[type="text"]::placeholder { color: var(--ink-text-dim); }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+
+.card {
+  background: var(--ink-2);
+  border: 1px solid #2e3268;
+  border-radius: 20px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+}
+
+/* ---- pennant divider: the shared signature flourish ---- */
+.pennant-rule {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--gold-dim);
+}
+.pennant-rule::before,
+.pennant-rule::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+}
+
+.crest {
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #0c0d1c;
+  flex-shrink: 0;
+}
+
+.status-pill {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  display: inline-block;
+}
+.status-pill.lobby { background: rgba(148, 152, 196, 0.18); color: var(--ink-text-dim); }
+.status-pill.ready { background: rgba(43, 217, 201, 0.18); color: var(--teal); }
+.status-pill.running { background: rgba(242, 183, 5, 0.2); color: var(--gold); }
+.status-pill.out { background: rgba(230, 57, 80, 0.18); color: var(--crimson); }
+.status-pill.winner { background: linear-gradient(90deg, var(--gold), #ffe27a); color: #241a00; }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}

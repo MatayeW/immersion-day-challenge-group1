@@ -1,17 +1,14 @@
 {
-  "name": "jsjsj",
-  "version": "0.0.1",
-  "description": "A no-fat JS implementation of the famous Die Gute Fabrik's Johann Sebastian Joust",
+  "name": "jsjoust",
+  "version": "1.0.0",
+  "description": "JS Joust - a phone-motion party game with a host dashboard and QR-code join, inspired by Johann Sebastian Joust.",
   "main": "server.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kesiev/jsjsj.git"
+  "scripts": {
+    "start": "node server.js"
   },
+  "license": "Unlicense",
   "dependencies": {
     "express": ">=5.2.1",
     "socket.io": ">=4.8.3"
-  },
-  "author": "KesieV",
-  "homepage": "https://github.com/kesiev/jsjsj",
-  "license": "Unlicense"
+  }
 }

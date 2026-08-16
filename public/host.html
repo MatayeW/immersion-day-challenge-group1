@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JS Joust — Host</title>
+<link rel="stylesheet" href="/css/styles.css">
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/qrcode.js"></script>
+<style>
+  body { min-height: 100vh; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 5vw 5vw 8vw; }
+
+  /* ---- setup screen ---- */
+  #setup { max-width: 420px; margin: 12vh auto; text-align: center; }
+  #setup .card { padding: 32px; text-align: left; }
+  #setup label { font-size: 0.85rem; color: var(--ink-text-dim); display: block; margin-bottom: 8px; }
+  #setup input { width: 100%; margin-bottom: 18px; }
+  #setup button { width: 100%; }
+
+  /* ---- dashboard ---- */
+  #dashboard { display: none; }
+  header.bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-bottom: 28px;
+  }
+  header.bar h1 { color: var(--gold); font-size: clamp(1.6rem, 3.4vw, 2.4rem); }
+  header.bar .eyebrow { display: block; margin-bottom: 6px; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 28px;
+  }
+  @media (max-width: 820px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+
+  /* ---- QR banner: the signature element ---- */
+  .banner {
+    padding: 26px 22px;
+    text-align: center;
+    position: relative;
+    background:
+      linear-gradient(180deg, var(--ink-3), var(--ink-2));
+  }
+  .banner::before {
+    content: '';
+    position: absolute; inset: 10px;
+    border: 2px solid rgba(242, 183, 5, 0.35);
+    border-radius: 14px;
+    pointer-events: none;
+  }
+  .banner .eyebrow { margin-bottom: 10px; }
+  .qr-frame {
+    background: var(--parchment);
+    border-radius: 14px;
+    padding: 14px;
+    display: inline-block;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.35);
+  }
+  .qr-frame img, .qr-frame canvas { display: block; width: 220px; height: 220px; }
+  .room-code {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 2.2rem;
+    letter-spacing: 0.16em;
+    color: var(--parchment);
+    margin-top: 16px;
+  }
+  .room-url {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--ink-text-dim);
+    margin-top: 4px;
+    word-break: break-all;
+  }
+
+  /* ---- lobby / player grid ---- */
+  .panel { padding: 24px; }
+  .panel-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 12px; flex-wrap: wrap; }
+  .panel-head h2 { font-size: 1.1rem; color: var(--parchment); }
+  .count-badge { font-family: var(--font-mono); color: var(--teal); font-size: 0.9rem; }
+
+  #playerGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+  }
+  .player-card {
+    background: var(--ink);
+    border: 1px solid #2e3268;
+    border-radius: 14px;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .player-card.winner { box-shadow: 0 0 0 2px var(--gold), 0 10px 24px rgba(242,183,5,0.25); }
+  .player-card.out { opacity: 0.55; }
+  .player-card .crest { width: 40px; height: 40px; font-size: 1.1rem; }
+  .player-card .info { min-width: 0; flex: 1; }
+  .player-card .name { font-weight: 700; color: var(--parchment); font-size: 0.95rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .empty-hint {
+    color: var(--ink-text-dim);
+    font-size: 0.9rem;
+    padding: 20px 0;
+    text-align: center;
+  }
+
+  .actions { display: flex; gap: 12px; margin-top: 22px; flex-wrap: wrap; }
+
+  /* ---- results ---- */
+  #podium { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+  .podium-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: var(--ink);
+    border: 1px solid #2e3268;
+  }
+  .podium-row.p1 { background: linear-gradient(90deg, rgba(242,183,5,0.18), transparent); border-color: var(--gold); }
+  .podium-rank { font-family: var(--font-mono); font-weight: 700; color: var(--ink-text-dim); width: 2.2em; }
+  .podium-row.p1 .podium-rank { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <section id="setup">
+    <div class="eyebrow" style="margin-bottom:10px; display:block;">Host</div>
+    <div class="card">
+      <label for="roomName">Name this tournament</label>
+      <input id="roomName" type="text" placeholder="e.g. Friday Night Joust" maxlength="40" autocomplete="off">
+      <button class="btn-primary" id="createBtn">🎪 Open the Lobby</button>
+    </div>
+  </section>
+
+  <section id="dashboard">
+    <header class="bar">
+      <div>
+        <span class="eyebrow">Tournament</span>
+        <h1 id="roomTitle"></h1>
+      </div>
+      <div id="phaseTag" class="status-pill lobby">Lobby open</div>
+    </header>
+
+    <div class="layout">
+      <div class="card banner">
+        <span class="eyebrow">Scan to joust</span>
+        <div class="qr-frame"><div id="qrcode"></div></div>
+        <div class="room-code" id="roomCode"></div>
+        <div class="room-url" id="roomUrl"></div>
+      </div>
+
+      <div class="card panel">
+        <div class="panel-head">
+          <h2 id="panelTitle">Who's here</h2>
+          <span class="count-badge" id="countBadge"></span>
+        </div>
+
+        <div id="playerGrid"></div>
+        <div class="empty-hint" id="emptyHint">Waiting for knights to scan the code…</div>
+
+        <div id="podium" style="display:none;"></div>
+
+        <div class="actions">
+          <button class="btn-primary" id="startBtn" disabled>⚔️ Start the Joust</button>
+          <button class="btn-ghost" id="restartBtn" style="display:none;">🔁 New Round</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script src="/js/host.js"></script>
+</body>
+</html>

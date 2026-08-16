@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>JS Joust</title>
+<link rel="stylesheet" href="/css/styles.css">
+<style>
+  .landing {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8vw 6vw;
+    gap: 34px;
+    text-align: center;
+  }
+  .lance {
+    font-size: 2.6rem;
+    transform: rotate(-25deg);
+    display: inline-block;
+  }
+  .title {
+    font-size: clamp(2.6rem, 10vw, 4.2rem);
+    color: var(--gold);
+    text-shadow: 0 3px 0 var(--gold-dim), 0 14px 30px rgba(242, 183, 5, 0.25);
+    line-height: 1;
+  }
+  .tagline {
+    color: var(--ink-text-dim);
+    font-size: 1.05rem;
+    max-width: 34ch;
+  }
+  .paths {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 380px;
+  }
+  .path-card {
+    padding: 24px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .path-card h2 {
+    font-size: 1.05rem;
+    color: var(--parchment);
+  }
+  .path-card p {
+    margin: 0;
+    color: var(--ink-text-dim);
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+  .join-row {
+    display: flex;
+    gap: 8px;
+  }
+  .join-row input { flex: 1; min-width: 0; text-transform: uppercase; letter-spacing: 0.12em; text-align: center; font-family: var(--font-mono); }
+  .join-row button { flex-shrink: 0; padding: 14px 18px; }
+  #joinError { color: var(--crimson); font-size: 0.85rem; min-height: 1.2em; }
+</style>
+</head>
+<body>
+  <main class="landing">
+    <div>
+      <span class="lance" aria-hidden="true">🔱</span>
+      <h1 class="title">JS JOUST</h1>
+    </div>
+    <p class="tagline">Hold your phone, follow the music, don't move too much. Last knight standing wins.</p>
+
+    <div class="paths">
+      <div class="card path-card">
+        <span class="eyebrow">On a laptop or TV</span>
+        <h2>Host a tournament</h2>
+        <p>Set up the lobby, get a QR code everyone can scan to join, and run the match from your screen.</p>
+        <button class="btn-primary" onclick="location.href='/host'">🎪 Host a Tournament</button>
+      </div>
+
+      <div class="card path-card">
+        <span class="eyebrow">On your phone</span>
+        <h2>Join with a code</h2>
+        <p>Got a 4-letter room code from the host instead of a QR code? Enter it here.</p>
+        <div class="join-row">
+          <input id="code" type="text" maxlength="4" placeholder="CODE" autocomplete="off">
+          <button class="btn-primary" id="joinBtn">Join →</button>
+        </div>
+        <div id="joinError" role="alert"></div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const codeInput = document.getElementById('code');
+    const err = document.getElementById('joinError');
+    function go() {
+      const code = codeInput.value.trim().toUpperCase();
+      if (code.length !== 4) {
+        err.textContent = 'Room codes are 4 letters/numbers, e.g. K3RN.';
+        return;
+      }
+      location.href = '/play/' + code;
+    }
+    document.getElementById('joinBtn').addEventListener('click', go);
+    codeInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') go(); });
+  </script>
+</body>
+</html>
