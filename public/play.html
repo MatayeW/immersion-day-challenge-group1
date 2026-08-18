@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>JS Joust</title>
+<link rel="stylesheet" href="/css/styles.css">
+<script src="/socket.io/socket.io.js"></script>
+<style>
+  html, body { height: 100%; overscroll-behavior: none; }
+  .stage {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8vw 7vw;
+    text-align: center;
+    gap: 22px;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+  .screen { display: none; width: 100%; max-width: 420px; }
+  .screen.active { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+
+  #roomBadge { color: var(--ink-text-dim); }
+  #roomNameLabel { color: var(--gold); }
+
+  input[type="text"] { width: 100%; text-align: center; font-size: 1.2rem; }
+  #nameInput { max-width: 320px; }
+
+  .big-btn { width: 100%; max-width: 320px; font-size: 1.2rem; padding: 20px; }
+
+  .crest-preview {
+    width: 84px; height: 84px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 1.6rem; color: #0c0d1c;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.35);
+  }
+
+  #errorMsg { color: var(--crimson); min-height: 1.4em; }
+
+  .pulse-dots span {
+    display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+    background: var(--teal); margin: 0 4px; animation: pulse 1.2s infinite ease-in-out;
+  }
+  .pulse-dots span:nth-child(2) { animation-delay: 0.15s; }
+  .pulse-dots span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes pulse { 0%, 80%, 100% { opacity: 0.25; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1.15); } }
+
+  #countdownNum {
+    font-family: var(--font-display);
+    font-size: 5rem;
+    color: var(--gold);
+  }
+
+  #playStatus {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    opacity: 0.75;
+  }
+  #playTitle { font-size: clamp(1.6rem, 8vw, 2.4rem); }
+
+  .result-emoji { font-size: 4.5rem; line-height: 1; }
+  #resultTitle { font-size: clamp(2rem, 10vw, 3rem); }
+  #resultPlace { font-family: var(--font-mono); color: var(--ink-text-dim); }
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+
+  <div class="screen active" id="screen-join">
+    <span class="lance" style="font-size:2rem;">🔱</span>
+    <div>
+      <span class="eyebrow" id="roomBadge">You're joining</span>
+      <h1 id="roomNameLabel">…</h1>
+    </div>
+    <input id="codeInput" type="text" placeholder="Room code" maxlength="4" autocomplete="off" style="display:none; text-transform:uppercase; letter-spacing:0.14em; font-family:var(--font-mono);">
+    <input id="nameInput" type="text" placeholder="Your name" maxlength="20" autocomplete="off">
+    <button class="btn-primary big-btn" id="joinBtn">Enter the Arena →</button>
+    <div id="errorMsg" role="alert"></div>
+  </div>
+
+  <div class="screen" id="screen-ready">
+    <div class="crest-preview" id="myCrest"></div>
+    <h2>You're in, <span id="myName"></span>!</h2>
+    <p style="color:var(--ink-text-dim); max-width: 32ch;">Tap ready when you've got a grip on your phone. This also lets the game read your motion.</p>
+    <button class="btn-primary big-btn" id="readyBtn">🫡 I'm Ready</button>
+  </div>
+
+  <div class="screen" id="screen-waiting">
+    <h2 id="waitingTitle">Waiting for the host to start…</h2>
+    <div class="pulse-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+    <p id="waitingCount" style="color:var(--ink-text-dim);"></p>
+  </div>
+
+  <div class="screen" id="screen-countdown">
+    <span class="eyebrow">Brace yourself</span>
+    <div id="countdownNum">3</div>
+  </div>
+
+  <div class="screen" id="screen-playing">
+    <h2 id="playTitle">Hold steady…</h2>
+    <p id="playStatus"></p>
+  </div>
+
+  <div class="screen" id="screen-result">
+    <div class="result-emoji" id="resultEmoji">🏆</div>
+    <h1 id="resultTitle">You won!</h1>
+    <p id="resultPlace"></p>
+    <p style="color:var(--ink-text-dim);">Look at the host's screen for the full standings.</p>
+  </div>
+
+  <div class="screen" id="screen-kicked">
+    <h2>You were removed from this joust.</h2>
+    <button class="btn-ghost big-btn" onclick="location.href='/'">Back home</button>
+  </div>
+
+</div>
+
+<script type="module" src="/js/player.js"></script>
+</body>
+</html>

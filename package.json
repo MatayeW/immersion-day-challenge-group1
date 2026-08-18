@@ -1,14 +1,14 @@
 {
-  "name": "joust-immersion-day",
+  "name": "jsjoust",
   "version": "1.0.0",
-  "description": "Polished multiplayer motion game for the Immersion Day Challenge",
+  "description": "JS Joust - a phone-motion party game with a host dashboard and QR-code join, inspired by Johann Sebastian Joust.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
+  "license": "Unlicense",
   "dependencies": {
-    "express": "^5.2.1",
-    "qrcode": "^1.5.4",
-    "socket.io": "^4.8.3"
+    "express": ">=5.2.1",
+    "socket.io": ">=4.8.3"
   }
 }
