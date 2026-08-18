@@ -100,6 +100,3 @@ public/
 
 Thanks to the original [jsjsj](https://github.com/kesiev/jsjsj) this
 project builds on.
-
-Obviously you can also have fun playing it — but I suggest you
-[buy and play the full game](http://www.jsjoust.com/), which is way better! ;)
